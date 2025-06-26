@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cálculo de Número Personal</title>
+    <style>
+        body {
+            width: 100%;
+            height: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: whitesmoke;
+        }
+
+        h1,
+        button {
+            text-align: center;
+            color: white;
+            background-color: rgb(101, 101, 235);
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #nombre {
+            margin-left: 1.8%;
+        }
+
+        .diseño {
+            border: none;
+            background-color: whitesmoke;
+            color: blue;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #resultado,
+        #explicacion {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        <img src="./img/numerologieb2.png" alt="foto">
+    </p>
+    <h1>Numerología</h1>
+    <div>
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="text" id="apellidos" placeholder="Apellidos" required />
+    </div>
+    <br />
+
+    <div class="container">
+        <label for="fechaNac">Fecha de nacimiento:</label>
+        <input id="fechaNac" type="date" required />
+        <button type="button" onclick="calcularNumeroPersonal()">Calcular</button>
+        <button type="button" onclick="mostrarExplicacion()" class="diseño">(explicación)</button>
+        <span id="resultado"></span>
+        <span id="explicacion"></span>
+    </div>
+
+    <script>
+        //Es el resultado de la suma de tu día de nacimiento hasta convertirlo a un solo dígito, aplica para todos los números del mes del 1 al 31, excepto para el 11 y el 22, 
+        //estos son los únicos números que dentro de la numerología tendrán 2 dígitos ya que son números maestros.
+        let ultimoNumeroPersonal = null;
+        let ultimoSignificado = null;
+
+        function reduccionMaestro(numero) {
+            let numeroReducido = numero;
+            const maestros = [11, 22];
+
+            while (numeroReducido > 9 && !maestros.includes(numeroReducido)) {
+                let suma = 0;
+                let digitos = numeroReducido.toString().split('');
+                for (let i = 0; i < digitos.length; i++) {
+                    suma += parseInt(digitos[i]);
+                }
+                numeroReducido = suma;
+            }
+
+            return numeroReducido;
+        }
+
+        function calcularNumeroPersonal() {
+            const FECHANAC = document.getElementById('fechaNac');
+            const fechaNacimiento = new Date(FECHANAC.value);
+
+            if (isNaN(fechaNacimiento.getTime())) {
+                document.getElementById('resultado').innerHTML = 'Por favor, introduce una fecha válida.';
+                document.getElementById('explicacion').innerHTML = '';
+                ultimoNumeroPersonal = null;
+                ultimoSignificado = null;
+                return;
+            }
+
+            let diaNacimiento = fechaNacimiento.getDate();//para conseguir fecha nacimiento
+
+
+            const numeroPersonal = reduccionMaestro(diaNacimiento);
+
+            const significados = [
+                { numero: 1, descripcion: "Líder, independiente, pionero." },
+                { numero: 2, descripcion: "Cooperativo, diplomático, sensible." },
+                { numero: 3, descripcion: "Creativo, expresivo, sociable." },
+                { numero: 4, descripcion: "Organizado, trabajador, práctico." },
+                { numero: 5, descripcion: "Aventurero, libre, adaptable." },
+                { numero: 6, descripcion: "Responsable, protector, amoroso." },
+                { numero: 7, descripcion: "Introspectivo, espiritual, analítico." },
+                { numero: 8, descripcion: "Ambicioso, poderoso, materialista." },
+                { numero: 9, descripcion: "Humanitario, compasivo, idealista." },
+                { numero: 11, descripcion: "Visionario, iluminado, inspirador." },
+                { numero: 22, descripcion: "Constructor, maestro, realizador." }
+            ];
+
+            const info = significados.find(item => item.numero === numeroPersonal);
+
+            ultimoNumeroPersonal = numeroPersonal;
+            ultimoSignificado = info ? info.descripcion : null;
+
+            document.getElementById('resultado').innerHTML = `<span style="color: red; font-size: 20px;">${numeroPersonal}. Número personal</span>`;
+            document.getElementById('explicacion').innerHTML = '';
+        }
+
+        function mostrarExplicacion() {
+            if (!ultimoNumeroPersonal) {
+                alert('Primero debes calcular tu número personal.');
+                return;
+            }
+
+            if (ultimoSignificado) {
+                document.getElementById('explicacion').innerHTML = `<span style="color: blue; font-size: 14px;">Explicación: ${ultimoSignificado}</span>`;
+            } else {
+                document.getElementById('explicacion').innerHTML = 'No hay explicación disponible para este número.';
+            }
+            // Mostrar en consola
+            console.log("Número personal:", ultimoNumeroPersonal);
+            console.log("Explicación:", ultimoSignificado || "No hay explicación disponible.");
+
+        }
+    </script>
+</body>
+
+</html>
