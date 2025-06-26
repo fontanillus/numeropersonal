@@ -5,52 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cálculo de Número Personal</title>
-    <style>
-        body {
-            width: 100%;
-            height: auto;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: whitesmoke;
-        }
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="stylesheet" href="./css/estilo.css">
 
-        h1,
-        button {
-            text-align: center;
-            color: white;
-            background-color: rgb(101, 101, 235);
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
-
-        .container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #nombre {
-            margin-left: 1.8%;
-        }
-
-        .diseño {
-            border: none;
-            background-color: whitesmoke;
-            color: blue;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        #resultado,
-        #explicacion {
-            margin-left: 10px;
-            font-weight: bold;
-        }
-
-        p {
-            text-align: center;
-        }
-    </style>
+       
 </head>
 
 <body>
@@ -73,6 +31,8 @@
         <span id="resultado"></span>
         <span id="explicacion"></span>
     </div>
+
+    <script src="./js/personal.js"></script>
 
     <script>
         //Es el resultado de la suma de tu día de nacimiento hasta convertirlo a un solo dígito, aplica para todos los números del mes del 1 al 31, excepto para el 11 y el 22, 
@@ -112,20 +72,6 @@
 
 
             const numeroPersonal = reduccionMaestro(diaNacimiento);
-
-            const significados = [
-                { numero: 1, descripcion: "Líder, independiente, pionero." },
-                { numero: 2, descripcion: "Cooperativo, diplomático, sensible." },
-                { numero: 3, descripcion: "Creativo, expresivo, sociable." },
-                { numero: 4, descripcion: "Organizado, trabajador, práctico." },
-                { numero: 5, descripcion: "Aventurero, libre, adaptable." },
-                { numero: 6, descripcion: "Responsable, protector, amoroso." },
-                { numero: 7, descripcion: "Introspectivo, espiritual, analítico." },
-                { numero: 8, descripcion: "Ambicioso, poderoso, materialista." },
-                { numero: 9, descripcion: "Humanitario, compasivo, idealista." },
-                { numero: 11, descripcion: "Visionario, iluminado, inspirador." },
-                { numero: 22, descripcion: "Constructor, maestro, realizador." }
-            ];
 
             const info = significados.find(item => item.numero === numeroPersonal);
 
